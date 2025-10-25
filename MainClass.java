@@ -6,7 +6,7 @@ import library.*;
 public class MainClass 
 {
     // Topics:
-    static void input_output()
+    public static void input_output()
     {
         Scanner input = new Scanner(System.in);
 
@@ -23,7 +23,7 @@ public class MainClass
         System.out.printf("Hello %s. \nYou're %d years old, and %.2f Kg!", name, age, weight);
         input.close();
     }
-    static void arrays()
+    public static void arrays()
     {
         // Define array:
         int[][] arr = {
@@ -55,34 +55,6 @@ public class MainClass
             }
             System.out.println();
         }
-    }
-    public static void vehicles()
-    {
-        Car c1 = new Car("Egypt", "1977");
-        Car c2 = new Car("Japan", "2019");
-        Car c3 = new Car("Germany", "2006");
-        // Notice the difference between (static) and normal fields
-        System.out.printf("c1: localId: %d  -  globalId: %d", c1.getLocalId(), c1.getGlobalId());
-        System.out.printf("\nc2: localId: %d  -  globalId: %d", c2.getLocalId(), c2.getGlobalId());
-        System.out.printf("\nc3: localId: %d  -  globalId: %d", c3.getLocalId(), c3.getGlobalId());
-        System.out.println();
-        
-        // upcasting & downcasting
-        Vehicle v;
-        Truck t = new Truck("Germany", "2006");
-
-        v = t;          // upcasting
-        v.run();        // truck method
-        // v.payload;   // gives error as it can only see vehicle not truck members
-
-        v = new Truck("","");
-        t = (Truck)v;   //downcasting
-        if (t instanceof Vehicle) System.out.println("t is Vehicle");
-        if (t instanceof Truck) System.out.println("t is Truck");
-
-        if (v instanceof Vehicle) System.out.println("v is Vehicle");
-        if (v instanceof Truck) System.out.println("v is Truck");
-        if ( !(v instanceof Car) ) System.out.println("v is not a Car");
     }
     public static void medical()
     {
@@ -123,16 +95,42 @@ public class MainClass
 
         author.displayBooksData();
     }
+    public static void vehicles()
+    {
+        Car c1 = new Car("Egypt", "1977");
+        Car c2 = new Car("Japan", "2019");
+        Car c3 = new Car("Germany", "2006");
+        // Notice the difference between (static) and normal fields
+        System.out.printf("c1: localId: %d  -  globalId: %d", c1.getLocalId(), c1.getGlobalId());
+        System.out.printf("\nc2: localId: %d  -  globalId: %d", c2.getLocalId(), c2.getGlobalId());
+        System.out.printf("\nc3: localId: %d  -  globalId: %d", c3.getLocalId(), c3.getGlobalId());
+        System.out.println();
+        
+        // upcasting & downcasting
+        Vehicle v;
+        Truck t = new Truck("Germany", "2006");
+
+        v = t;          // upcasting
+        v.run();        // truck method
+        // v.payload;   // gives error as it can only see vehicle not truck members
+        if (v instanceof Vehicle) System.out.println("v is Vehicle");
+        if (v instanceof Truck) System.out.println("v is Truck");
+        if ( !(v instanceof Car) ) System.out.println("v is not a Car");
+
+        v = new Truck("","");
+        t = (Truck)v;   //downcasting
+        if (t instanceof Vehicle) System.out.println("t is Vehicle");
+        if (t instanceof Truck) System.out.println("t is Truck");
+    }
     public static void main(String[] args) 
     {
         // input_output();
         // arrays();
-        // vehicles();
         // medical();
         // library();
+        // vehicles();
     }
 }
-
 
 /*                                                   Study
 to run:
