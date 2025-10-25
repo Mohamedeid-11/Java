@@ -209,8 +209,9 @@ Concepts:
     static: 
         - allows variables and methods to belong to the class itself rather than individual instances.
         - Class-level ownership: There is only one copy of a static member, shared across all instances of the class
-        - Direct access: static members can be accessed directly using the class name, without needing to create an object of that class. For example, ClassName.staticVariable or ClassName.staticMethod()
-
+        - Direct access: static members can be accessed directly using the class name, without needing to create an object of that class. 
+          For example, ClassName.staticVariable or ClassName.staticMethod()
+        - static members CANNOT interact with non-static members
     final: 
         - defines Constant
         - prevents method override (final)
