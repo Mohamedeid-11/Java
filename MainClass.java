@@ -128,7 +128,7 @@ public class MainClass
         // arrays();
         // medical();
         // library();
-        // vehicles();
+        // vehicles(); 
     }
 }
 
@@ -152,7 +152,7 @@ Concepts:
         2. Association: a relation between two separate classes which establishes through their Objects. 
             - Aggregation(has/own-a) جمع --> unidirectional association i.e. a one-way relationship. 
                 (Both entries can survive individually) 
-                school has a (taecher) and a (student) 
+                (school) has a (teacher and a student) 
             - Composition (part-of) تكوين --> the composed object cannot exist without the other entity.
                 (engine) is part of (car)
 
@@ -164,7 +164,10 @@ Concepts:
         dynamic binding mechanism: determines which method definition will be called in case of overriding
     
     (Constructor)
-    - Has the (same exact name) as the class and doesn't have (return type)
+    - Has the (same exact name) as the class 
+    - doesn't have (return type)
+    - Can't be inhereted (subclasses must call super())
+
     - Types:
     1. Default          --> if you didn't implement any constructor
     2. Parametrized
@@ -190,7 +193,7 @@ Concepts:
     private:    Restricts access to within the class.
         - writing none of the above will be default:
     default:    Allows access within the package        
-        - top level classes and only be (public) or (default)
+        - top level classes can only be (public) or (default)
     
     Non Access Modifiers:
     class:      Declares a class.
@@ -199,26 +202,37 @@ Concepts:
     interface:  Declares an interface.
     implements: Indicates that a class implements an interface.
     
-    abstract:   Declares an abstract class or method(must be within abstract class)   like in vehicle/Vehicle.java
+    abstract:                            Example: vehicle/Vehicle.java
         - class: you can't create objects of an abstract class(inherit from it only)
-        - method: declared without an implementation (body),  subclasses must provide their own implementation.
-        - upcasting: An abstract class variable can be instantiated with any of its subclasses (if they are not abstract)
-            Vehicle v = new Truck();
-
+            it can have constructor but only for subclasses to call it through super()
+        - method(only in abstract classes): declared without an implementation (body),  subclasses must provide their own implementation.
+    
     Field Modifiers:
     static: 
-        - allows variables and methods to belong to the class itself rather than individual instances.
-        - Class-level ownership: There is only one copy of a static member, shared across all instances of the class
-        - Direct access: static members can be accessed directly using the class name, without needing to create an object of that class. 
-          For example, ClassName.staticVariable or ClassName.staticMethod()
-        - static members CANNOT interact with non-static members
+      Variables and methods that belong to the class itself not individual instances.
+        - Class-level ownership: There is only one copy shared across all instances and (sublasses)
+        - Direct access: accessed directly using the class name
+        - Can't be (overriden), hence can't be (abstract)
+        - Cannot refer to (this) or (super)
+        - Cannot interact with non-static members
+
     final: 
         - defines Constant
         - prevents method override (final)
         - prevent class inheritance
     /
     
-    
+    Upcasting and Downcasting: 
+        - upcasting: converting an object of a subclass to it superclass → Done implicitly
+        - Downcasting: converting an object of a superclass to one of its subclasses → Must be done explicitly
+
+            Vehicle v = new Truck();        (upcasting)
+            Truck t = (Truck) v;            (explicit downcasting)
+            Car c = (Car) v;                (wrong downcasting --> throws an exception)
+
+        if(t instanceOf Truck) {}           (true when comparing the instance to its class or suprtclass)
+    /
+
     Casting
     1. Widening Casting (automatic):    smaller type to larger  (byte --> int)
     2. Narrwing Casting (manual):       larger type to smaller one (long --> int)
@@ -226,6 +240,13 @@ Concepts:
     int num = 5;
     float num2 = num;           (Widening Casting)
     byte num3 = (byte) num;     (Narrwing Casting)
+
+    // Using Methods
+    String s="200";
+    int i = Integer.parseInt(s);
+    float a = (Float.valueOf("10.5")).floatValue(); 
+    String s1 = String.valueOf(i);  
+
 /
 
 
@@ -258,6 +279,7 @@ String
 
 
 Array
+    Arrays are classes
     Define array:
         int[][] arr = {
             {1, 2, 3},                 // 1. Arry initializer(array constant)  --> cannot be used for later assignment
