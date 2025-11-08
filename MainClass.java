@@ -213,42 +213,41 @@ Concepts:
         - Class-level ownership: There is only one copy shared across all instances and (sublasses)
         - Direct access: accessed directly using the class name
         - Can't be (overriden), hence can't be (abstract)
-        - Cannot refer to (this) or (super)
-        - Cannot interact with non-static members
+        - Cannot interact with non-static members as it's object specific
+        - can't call (this) or (super)
 
     final: 
         - defines Constant
-        - prevents method override (final)
         - prevent class inheritance
-    /
-    
-    Upcasting and Downcasting: 
-        - upcasting: converting an object of a subclass to it superclass → Done implicitly
-        - Downcasting: converting an object of a superclass to one of its subclasses → Must be done explicitly
-
-            Vehicle v = new Truck();        (upcasting)
-            Truck t = (Truck) v;            (explicit downcasting)
-            Car c = (Car) v;                (wrong downcasting --> throws an exception)
-
-        if(t instanceOf Truck) {}           (true when comparing the instance to its class or suprtclass)
-    /
+        - prevents method override
+        /
 
     Casting
-    1. Widening Casting (automatic):    smaller type to larger  (byte --> int)
-    2. Narrwing Casting (manual):       larger type to smaller one (long --> int)
+    1. Widening Casting (Implicit):    smaller type to larger  (byte --> int)
+    2. Narrwing Casting (Explicit):       larger type to smaller one (long --> int)
     
     int num = 5;
     float num2 = num;           (Widening Casting)
     byte num3 = (byte) num;     (Narrwing Casting)
 
     // Using Methods
-    String s="200";
+    String s = "200";
     int i = Integer.parseInt(s);
     float a = (Float.valueOf("10.5")).floatValue(); 
     String s1 = String.valueOf(i);  
 
 /
 
+Upcasting and Downcasting: 
+    - upcasting: converting an object of a subclass to it superclass → Done implicitly
+    - Downcasting: converting an object of a superclass to one of its subclasses → Must be done explicitly
+
+        Vehicle v = new Truck();        (upcasting)
+        Truck t = (Truck) v;            (explicit downcasting)
+        Car c = (Car) v;                (wrong downcasting --> throws an exception)
+
+    if(t instanceOf Truck) {}           (true when comparing the instance to its class or suprtclass)
+/
 
 String
     Definition:
@@ -257,7 +256,7 @@ String
         String s1 = new String(str);   (normal reference)
         String s2 = new String(chars); (now we can print chars)
 
-    Comparison --> s1.equals(s2) || s1.compareTo(s2)   '==' Operator CANNOT be used(it compares object references)
+    Comparison --> s1.equals(s2) || s1.compareTo(s2)   '==' Operator compares object references
 
     - When we define (literal) string : String str = "Hello"; 
       the compiler searches the (stringBuffer)
@@ -292,4 +291,5 @@ Array
         arr[2] = new int[]{1, 2, 3};
         (X)  arr[2] = {1, 2, 3};  // error
         
+
 */
