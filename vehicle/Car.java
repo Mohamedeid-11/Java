@@ -5,8 +5,8 @@ public class Car extends Vehicle
     private static int globalId;
     private int localId;
 
-    public Car(String make, String model){
-        super(make, model);
+    public Car(String country, String model){
+        super(country, model);
         localId = ++globalId;
     }
 
@@ -18,6 +18,6 @@ public class Car extends Vehicle
     }
 
     public void run() {
-        System.out.println("Vrom Vrom");
+        System.out.println("Child: Vrom Vrom");
     }
 }

@@ -1,8 +1,8 @@
 import java.util.Scanner;
+import java.lang.Integer;
 import vehicle.*;           // import all classes in vehicle
 import medical.*;
 import library.*;
-
 public class MainClass 
 {
     // Topics:
@@ -97,38 +97,101 @@ public class MainClass
     }
     public static void vehicles()
     {
+        // Notice the difference between (static) and normal fields
         Car c1 = new Car("Egypt", "1977");
         Car c2 = new Car("Japan", "2019");
         Car c3 = new Car("Germany", "2006");
-        // Notice the difference between (static) and normal fields
         System.out.printf("c1: localId: %d  -  globalId: %d", c1.getLocalId(), c1.getGlobalId());
         System.out.printf("\nc2: localId: %d  -  globalId: %d", c2.getLocalId(), c2.getGlobalId());
         System.out.printf("\nc3: localId: %d  -  globalId: %d", c3.getLocalId(), c3.getGlobalId());
-        System.out.println();
+        System.out.println('\n');
         
-        // upcasting & downcasting
+        // Notice using super.color in method headquarters()
         Vehicle v;
         Truck t = new Truck("Germany", "2006");
-
-        v = t;          // upcasting
-        v.run();        // truck method
-        // v.payload;   // gives error as it can only see vehicle not truck members
+        t.headquarters();
+        System.out.println();
+        
+        // upcasting
+        v = t;
+        System.out.println(v.getCountry());     // still "Germany" and didn't use child attribute
+        v.run();                                // used child method --> even when vehicle implemented run()
+        //v.payload;                            // error as (v) can only see vehicle's members
         if (v instanceof Vehicle) System.out.println("v is Vehicle");
         if (v instanceof Truck) System.out.println("v is Truck");
         if ( !(v instanceof Car) ) System.out.println("v is not a Car");
+        System.out.println();
 
-        v = new Truck("","");
-        t = (Truck)v;   //downcasting
+        //downcasting
+        t = (Truck)v;                             // cast truck into it's original form
+        //t = v;                                  // compile time error: 
+        //Car c = (Car) v;                        // gives a run time ClassCastException
         if (t instanceof Vehicle) System.out.println("t is Vehicle");
         if (t instanceof Truck) System.out.println("t is Truck");
     }
-    public static void main(String[] args) 
+    
+    public static void exceptions()
+    {
+        int n = 0;
+        
+        try {
+            n = 3/1;
+            System.out.println("rest of try " + n); // code here doesn't excute after exception throw
+        } 
+        catch (ArithmeticException ae) {
+            System.out.println("catch 1");
+        }
+        catch(Exception e) {
+            System.out.println("catch 2: general");
+        }
+        finally {
+            System.out.println("excutes whatever what"); // solves the issue in the previous comment
+        }
+
+
+        System.out.println("after try-catch n: " + n);
+    }
+    // handliling checked exceptions, and exceptions passing
+    public static void show() throws Exception
+    {
+        System.out.println("show is called and throws a checked exception");
+        throw new Exception("My Exception"); // if not handeled it gores to the caller method
+    }
+    public static void show2() throws Exception
+    {
+        System.out.println("show2 is called");
+        try {
+            show();
+        } catch (Exception rte) {
+            System.out.println("# Handeled in show2");
+        }
+        System.out.println("end of show2");
+    }
+    public static void show3() throws Exception
+    {
+        System.out.println("show3 is called");
+        try {
+            show2();
+        } catch (Exception rte) {
+            System.out.println("# Handeled in show3");
+        }
+        System.out.println("end of show3");
+    }
+
+    public static void main(String[] args) throws Exception
+    // we have to use (throws) here as we'd called show3 that (throws) a checked exception, and we didn't handle it here in main
     {
         // input_output();
         // arrays();
         // medical();
         // library();
         // vehicles(); 
+        // exceptions();
+        
+        // System.out.println("main is called");
+        // show3();
+        // System.out.println("end of main");
+
     }
 }
 
@@ -137,7 +200,16 @@ to run:
 1. Compile (using javac --> into bytecode .class):   javac general.java
 2. run (usign JVM --> into machine code):            java general
 
-(Modifiers come before data or return type)
+
+Notes:
+    - Each file must have EXACTLY on public class, and that class must be of the same name
+    - Modifiers come before datatype or returntype
+    - Avoid compiler errors:
+        - Usage of uninitialized Local Variables(in methods)
+        - Unreacheable code: E.g. code after return, Unreachable catch block, while(false) ...
+        - All Checked Exceptions Must Be Handled or passed by (throws)
+/
+
 
 Concepts:
     (OOP)
@@ -160,18 +232,20 @@ Concepts:
     1. Encapsulation:   isolate data throuh (access modifiers)
     2. Inheritance:     create hierarchy of relates classes     --> inherits all non-private members
     3. Abstraction:     hide complexity (black box)
-    4. Polymorphism:    methods have general meaning but different forms [ overload(change parameter list), override ] 
-        dynamic binding mechanism: determines which method definition will be called in case of overriding
+    4. Polymorphism:    methods have general meaning but different forms [ overload, override ] 
     
+    Overload: compile time polymorphism (static or early binding) -->  same name, different parameter list
+    Override: run time polymorphism (dynamic or late binding)     -->  when child implement parent method
+
+
     (Constructor)
     - Has the (same exact name) as the class 
     - doesn't have (return type)
     - Can't be inhereted (subclasses must call super())
-
     - Types:
-    1. Default          --> if you didn't implement any constructor
-    2. Parametrized
-    3. Copy constructor --> public Car(Car c) {brand = c.brand;}
+        1. Default          --> if you didn't implement any constructor
+        2. Parametrized
+        3. Copy constructor --> public Car(Car c) {brand = c.brand;}
     - can call each other through [ this() ]   --> like in medical\Doctor.java
     
 
@@ -188,19 +262,20 @@ Concepts:
 
     (KeyWords)
     Access Modifiers:
-    public:     Allows access from anywhere
-    protected:  Allows access within the package and by subclasses (even if within different).
-    private:    Restricts access to within the class.
+    public    (+):  Allows access from anywhere
+    protected (~):  Allows access within the package and by subclasses (even if within different).
+    private   (-):  Restricts access to within the class.
         - writing none of the above will be default:
     default:    Allows access within the package        
         - top level classes can only be (public) or (default)
     
     Non Access Modifiers:
     class:      Declares a class.
-    enum:       Declares an enumerated type.
     extends:    Indicates inheritance (a class extending another class).
     interface:  Declares an interface.
     implements: Indicates that a class implements an interface.
+    defualt:    to define a defualt interface method
+    enum:       Declares an enumerated type.
     
     abstract:                            Example: vehicle/Vehicle.java
         - class: you can't create objects of an abstract class(inherit from it only)
@@ -221,32 +296,44 @@ Concepts:
         - prevents method override (final)
         - prevent class inheritance
     /
-    
-    Upcasting and Downcasting: 
-        - upcasting: converting an object of a subclass to it superclass → Done implicitly
-        - Downcasting: converting an object of a superclass to one of its subclasses → Must be done explicitly
+/
 
-            Vehicle v = new Truck();        (upcasting)
-            Truck t = (Truck) v;            (explicit downcasting)
-            Car c = (Car) v;                (wrong downcasting --> throws an exception)
 
-        if(t instanceOf Truck) {}           (true when comparing the instance to its class or suprtclass)
-    /
+Exceptions:
+    - All exceptions extends (throwable)
+    - Unchecked exceptions: riase at run time   (extends RunTimeException)
+    - Checked exceptions: riase at compile time (extends Exception directly) 
+        --> if not handeled through (try catch) the method must (throws) the exception to it's caller
+/
 
-    Casting
+
+Upcasting and Downcasting: 
+    - upcasting: converting an object of a subclass to it superclass → Done implicitly
+    - Downcasting: converting an object of a superclass to one of its subclasses → Must be done explicitly
+
+    ---> ### See vehicles() ###
+
+        Vehicle v = new Truck();        (upcasting)
+        Truck t = (Truck) v;            (explicit downcasting)
+        Car c = (Car) v;                (wrong downcasting --> throws an exception)
+
+    if(t instanceOf Truck) {}           (true when comparing the instance to its class or suprtclass)
+/
+
+
+Casting
     1. Widening Casting (automatic):    smaller type to larger  (byte --> int)
     2. Narrwing Casting (manual):       larger type to smaller one (long --> int)
-    
+
     int num = 5;
     float num2 = num;           (Widening Casting)
     byte num3 = (byte) num;     (Narrwing Casting)
 
     // Using Methods
-    String s="200";
+    String s = "200";
     int i = Integer.parseInt(s);
     float a = (Float.valueOf("10.5")).floatValue(); 
     String s1 = String.valueOf(i);  
-
 /
 
 
@@ -291,5 +378,6 @@ Array
         arr[0] = arr[1];
         arr[2] = new int[]{1, 2, 3};
         (X)  arr[2] = {1, 2, 3};  // error
-        
+/
+
 */
