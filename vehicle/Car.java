@@ -9,7 +9,7 @@ public class Car extends Vehicle
         super(country, model);
         localId = ++globalId;
     }
-
+    
     public static int getGlobalId() {
         return globalId;
     }

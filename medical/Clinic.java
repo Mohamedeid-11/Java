@@ -10,7 +10,7 @@ public class Clinic
         System.out.println("counter: " + Doctor.getCounter());
     }
 
-    public void display_doctor(String day) 
+    public void display_doctors(String day) 
     {
         System.out.printf("Doctors working on %s: ", day);
         for(Doctor doc : doctors)

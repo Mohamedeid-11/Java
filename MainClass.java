@@ -3,7 +3,7 @@ import java.lang.Integer;
 import vehicle.*;           // import all classes in vehicle
 import medical.*;
 import library.*;
-public class MainClass 
+public class MainClass
 {
     // Topics:
     public static void input_output()
@@ -67,7 +67,7 @@ public class MainClass
         Doctor d3 = new Doctor("C", "Saturday");
         clinic.insert_doctor(d3, 2);
         
-        clinic.display_doctor("Saturday");
+        clinic.display_doctors("Saturday");
     }
     public static void library()
     {
@@ -135,8 +135,8 @@ public class MainClass
         int n = 0;
         
         try {
-            n = 3/1;
-            System.out.println("rest of try " + n); // code here doesn't excute after exception throw
+            n = 3/0;
+            System.out.println("rest of try " + n); // code here doesn't execute after exception throw
         } 
         catch (ArithmeticException ae) {
             System.out.println("catch 1");
@@ -145,9 +145,8 @@ public class MainClass
             System.out.println("catch 2: general");
         }
         finally {
-            System.out.println("excutes whatever what"); // solves the issue in the previous comment
+            System.out.println("always gets excuted"); // solves the issue in the previous comment
         }
-
 
         System.out.println("after try-catch n: " + n);
     }
@@ -156,6 +155,8 @@ public class MainClass
     {
         System.out.println("show is called and throws a checked exception");
         throw new Exception("My Exception"); // if not handeled it gores to the caller method
+        // here is unreachable code
+
     }
     public static void show2() throws Exception
     {
@@ -185,12 +186,13 @@ public class MainClass
         // arrays();
         // medical();
         // library();
-        // vehicles(); 
+        vehicles(); 
         // exceptions();
         
-        // System.out.println("main is called");
-        // show3();
-        // System.out.println("end of main");
+        // Application on Exceptions
+        System.out.println("main is called");
+        show3();
+        System.out.println("end of main");
 
     }
 }
@@ -203,7 +205,11 @@ to run:
 
 Notes:
     - Each file must have EXACTLY on public class, and that class must be of the same name
-    - Modifiers come before datatype or returntype
+    - class access modifiers  -->  public | default
+    - (Modifiers) come before datatype or return type
+    - child inherits all (non-private) members
+    - reference type: class (like String, Scanner), array, interface
+    - (Object) is the super classes of all classes in java
     - Avoid compiler errors:
         - Usage of uninitialized Local Variables(in methods)
         - Unreacheable code: E.g. code after return, Unreachable catch block, while(false) ...
@@ -215,7 +221,7 @@ Concepts:
     (OOP)
     In the real world, everything around us is an Object that has some properties and functionality.
     we can define OOP as a Programming paradigm where the software is represented by a collection of objects
-    nteracting with each other.
+    interacting with each other.
 
     Relationships:
         1. generalization(is kind of): A generalization connects a derived class to its base class. 
@@ -229,8 +235,8 @@ Concepts:
                 (engine) is part of (car)
 
     OOP Principles:
-    1. Encapsulation:   isolate data throuh (access modifiers)
-    2. Inheritance:     create hierarchy of relates classes     --> inherits all non-private members
+    1. Encapsulation:   combine data and methods into (class). use (access modifiers) to isolate data from outer interference.
+    2. Inheritance:     create hierarchy of related classes     -->     inherits all non-private members
     3. Abstraction:     hide complexity (black box)
     4. Polymorphism:    methods have general meaning but different forms [ overload, override ] 
     
@@ -247,44 +253,34 @@ Concepts:
         2. Parametrized
         3. Copy constructor --> public Car(Car c) {brand = c.brand;}
     - can call each other through [ this() ]   --> like in medical\Doctor.java
-    
+/
 
-    (Package)
-    - Group of related classes.
-    - Standard Packages: 
-    java.*
-    javax.*
-    - use (import) to access (public) classes in other packages
-    
 
-    Non Primitave / reference types: class (like String, Scanner), array, interface
-    
-
-    (KeyWords)
-    Access Modifiers:
+(KeyWords)
+Access Modifiers:
     public    (+):  Allows access from anywhere
     protected (~):  Allows access within the package and by subclasses (even if within different).
     private   (-):  Restricts access to within the class.
         - writing none of the above will be default:
     default:    Allows access within the package        
         - top level classes can only be (public) or (default)
-    
-    Non Access Modifiers:
+
+Non Access Modifiers:
     class:      Declares a class.
     extends:    Indicates inheritance (a class extending another class).
     interface:  Declares an interface.
     implements: Indicates that a class implements an interface.
-    defualt:    to define a defualt interface method
+    default:    to define a default interface method
     enum:       Declares an enumerated type.
-    
+
     abstract:                            Example: vehicle/Vehicle.java
         - class: you can't create objects of an abstract class(inherit from it only)
             it can have constructor but only for subclasses to call it through super()
         - method(only in abstract classes): declared without an implementation (body),  subclasses must provide their own implementation.
-    
-    Field Modifiers:
+
+Field Modifiers:
     static: 
-      Variables and methods that belong to the class itself not individual instances.
+        Variables and methods that belong to the class itself not individual instances.
         - Class-level ownership: There is only one copy shared across all instances and (sublasses)
         - Direct access: accessed directly using the class name
         - Can't be (overriden), hence can't be (abstract)
@@ -295,16 +291,101 @@ Concepts:
         - defines Constant
         - prevents method override (final)
         - prevent class inheritance
-    /
 /
 
 
+(Package)
+- Group of related classes.
+- Standard Packages: 
+java.*
+javax.*
+- use (import) to access (public) classes in other packages
+
+
+Interface:
+    - An interface is a pure (Abstract) class.      so the implementer class HAS TO OVERRIDE ALL of the interface methods
+    - A class can implement (many interfaces).
+    - An interface can extend (many interfaces).
+    - All data members are (public static final),     and there is no need to define them explicitly
+    - All methods are (public abstract).
+    - default methods provide a default implementation that you can override if you want providing (backward compatibility)
+    - static methods in interfaces are not inherited.
+    - we can use (upcasting) with interfaces and classes that implement it
+
+    - Abstract classes should be used primarily for objects that are closely related, 
+    whereas interfaces are best suited for providing a common functionality to unrelated classes. 
+    
+    - Comparable Interface:    -->   int compareTo(Object o)
+        -ve : if the current object is smaller than the passed object
+        0   : if both objects are equal
+        +ve : if the current object is larger than the passed object
+    
+        public class Student implements Comparable {
+            private int id;
+            private String name;
+            private float marks;
+            public Student(int id, String name, float marks){
+                this.id = id;
+                this.name = name;
+                this.marks = marks;
+            }
+            public int compareTo(Object obj) {
+                Student otherStudent = (Student) obj;
+                if(this.id < otherStudent.id)
+                    return -1;
+                else if(this.id > otherStudent.id)
+                    return 1;
+                else return 0;
+            }
+        }
+
+    - implementing compareTo defines the (natural ordering)  -->  what Arrays.sort() or Collections.sort() use
+        public static void main(String[] args) {
+            Student[] arr = new Student[3];
+
+            arr[0] = new Student(7, "Ahmed”, 30.0F);
+            arr[1] = new Student(1, "Mona", 50.0F);
+            arr[2] = new Student(5, "Ashraf”, 70.0F);
+
+            Arrays.sort(arr);     // NOTE //
+        }
+    - Comparator Interface:   -->   int compare(Object o1, Object o2) returns:
+        -ve : if the first object is smaller than the second object
+        0   : if both objects are equal
+        +ve : if the first object is larger than the second object
+
+      - we can use Comparator interface to override natural ordering (compareTo):
+        public class StudentComparator implements Comparator {
+            @Override
+            public int compare(Object obj1, Object obj2) {
+                Student student1 = (Student) obj1;
+                Student student2 = (Student) obj2;
+                if(student1.marks < student2.marks)
+                    return -1;
+                else if(student1.marks > student2.marks)
+                    return 1;
+                else return 0;
+            }
+        }
+        public static void main(String[] args) {
+            StudentComparator comparator = new StudentComparator();
+            Student[] arr = new Student[3];
+
+            arr[0] = new Student(7, "Ahmed”, 30.0F);
+            arr[1] = new Student(1, "Mona", 50.0F);
+            arr[2] = new Student(5, "Ashraf”, 70.0F);
+
+            Arrays.sort(arr, comparator);  // NOTE //
+        }
+
 Exceptions:
-    - All exceptions extends (throwable)
+    - All exceptions                            (extends throwable)
     - Unchecked exceptions: riase at run time   (extends RunTimeException)
     - Checked exceptions: riase at compile time (extends Exception directly) 
         --> if not handeled through (try catch) the method must (throws) the exception to it's caller
-/
+
+    - Code after the line that throwed exception is (unrechable)
+    /
 
 
 Upcasting and Downcasting: 
@@ -366,7 +447,7 @@ String
 
 
 Array
-    Arrays are classes
+    Arrays are classes (Reference type)
     Define array:
         int[][] arr = {
             {1, 2, 3},                 // 1. Arry initializer(array constant)  --> cannot be used for later assignment
