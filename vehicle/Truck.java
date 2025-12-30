@@ -2,11 +2,12 @@ package vehicle;
 
 public class Truck extends Vehicle 
 {
-    public String country = "Egypt"; // our main country for trucks
+    public String country; // where this truck was manufactured
     public int payload;
     public Truck(String country, String model)
     {
-        super(country, model);
+        super(model);
+        this.country = country;
         // this.model;  //gives error as model is private
     }
 
@@ -18,8 +19,6 @@ public class Truck extends Vehicle
     public void headquarters()
     {
         System.out.println("Main Headquater: " + super.country);
-        System.out.println("Main Trucks Headquater: " + country);
+        System.out.println("Truck's Manufacturer: " + country);
     }
-
-
 }

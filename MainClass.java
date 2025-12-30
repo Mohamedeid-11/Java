@@ -107,14 +107,14 @@ public class MainClass
         System.out.println('\n');
         
         // Notice using super.color in method headquarters()
-        Vehicle v;
-        Truck t = new Truck("Germany", "2006");
+        Truck t = new Truck("Egypt", "2006");
         t.headquarters();
         System.out.println();
         
-        // upcasting
-        v = t;
-        System.out.println(v.getCountry());     // still "Germany" and didn't use child attribute
+        // upcasting  
+        // sees parent data at compile time but at runtime if there were overriding it will use child's data
+        Vehicle v = t;
+        System.out.println(v.getCountry());     // "Germany" as the method calls Vehicle.country (the method was't overriden to print Truck.country)
         v.run();                                // used child method --> even when vehicle implemented run()
         //v.payload;                            // error as (v) can only see vehicle's members
         if (v instanceof Vehicle) System.out.println("v is Vehicle");
@@ -178,7 +178,6 @@ public class MainClass
         }
         System.out.println("end of show3");
     }
-
     public static void main(String[] args) throws Exception
     // we have to use (throws) here as we'd called show3 that (throws) a checked exception, and we didn't handle it here in main
     {
@@ -186,21 +185,20 @@ public class MainClass
         // arrays();
         // medical();
         // library();
-        vehicles(); 
+        // vehicles(); 
         // exceptions();
         
         // Application on Exceptions
-        System.out.println("main is called");
-        show3();
-        System.out.println("end of main");
-
+        // System.out.println("main is called");
+        // show3();
+        // System.out.println("end of main");
     }
 }
 
 /*                                                   Study
 to run:
-1. Compile (using javac --> into bytecode .class):   javac general.java
-2. run (usign JVM --> into machine code):            java general
+1. Compile (using javac --> into bytecode .class):   javac MainClass.java
+2. run (usign JVM --> into machine code):            java MainClass
 
 
 Notes:
@@ -208,8 +206,9 @@ Notes:
     - class access modifiers  -->  public | default
     - (Modifiers) come before datatype or return type
     - child inherits all (non-private) members
-    - reference type: class (like String, Scanner), array, interface
     - (Object) is the super classes of all classes in java
+    - reference type: class (like String, Scanner), array, interface
+    - by default all variables reference or value types get (passed by value)
     - Avoid compiler errors:
         - Usage of uninitialized Local Variables(in methods)
         - Unreacheable code: E.g. code after return, Unreachable catch block, while(false) ...
@@ -295,12 +294,12 @@ Field Modifiers:
 
 
 (Package)
-- Group of related classes.
-- Standard Packages: 
-java.*
-javax.*
-- use (import) to access (public) classes in other packages
-
+    - Group of related classes.
+    - use (import) to access (public) classes in other packages
+    - Standard Packages: 
+        java.*
+        javax.*
+/
 
 Interface:
     - An interface is a pure (Abstract) class.      so the implementer class HAS TO OVERRIDE ALL of the interface methods
@@ -377,6 +376,8 @@ Interface:
 
             Arrays.sort(arr, comparator);  // NOTE //
         }
+/
+
 
 Exceptions:
     - All exceptions                            (extends throwable)
@@ -385,7 +386,7 @@ Exceptions:
         --> if not handeled through (try catch) the method must (throws) the exception to it's caller
 
     - Code after the line that throwed exception is (unrechable)
-    /
+/
 
 
 Upcasting and Downcasting: 
@@ -460,5 +461,26 @@ Array
         arr[2] = new int[]{1, 2, 3};
         (X)  arr[2] = {1, 2, 3};  // error
 /
+
+Collections
+    The Java Collections Framework provides a set of interfaces (like List, Set, and Map) 
+    and a set of classes (ArrayList, HashSet, HashMap, etc.) that implement those interfaces.
+
+    Interface	      Common Classes	                    Description
+    List	    ArrayList, LinkedList	            Ordered collection that allows duplicates
+    Set	        HashSet, TreeSet, LinkedHashSet	    Collection of unique elements
+    Map	        HashMap, TreeMap, LinkedHashMap	    Stores key-value pairs with unique keys
+
+/
+
+
+Design Patterns
+    - Creational patterns: Focus on the creation of objects.
+        Singleton pattern --> class has one single instance
+    
+    - Structural patterns: Focus on class and object composition. 
+    - Behavioral patterns: Focus on the communication between objects.
+/
+
 
 */

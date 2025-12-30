@@ -12,6 +12,10 @@ public abstract class Vehicle
         this.model = model;
     }
 
+    public Vehicle(String model) {
+        this.model = model;
+    }
+
     public String getCountry() {
         return country;
     }
